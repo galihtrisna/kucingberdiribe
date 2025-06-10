@@ -61,8 +61,8 @@ public class UserController {
     }
     
     @GetMapping("/me")
-    public ApiResponse<ProfileDto> getProfile(Authentication auth) {
-    	return ApiResponse.success(userService.getUserProfile(auth));
+    public ResponseEntity<ApiResponse<ProfileDto>> getProfile(Authentication auth) {
+    	return ResponseEntity.ok(ApiResponse.success(userService.getUserProfile(auth)));
     }
 
 }
