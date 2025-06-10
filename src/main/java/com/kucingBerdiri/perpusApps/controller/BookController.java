@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kucingBerdiri.perpusApps.dtos.AddBookRequest;
 import com.kucingBerdiri.perpusApps.model.Book;
 
 
@@ -43,7 +44,19 @@ public class BookController {
 	}
 	
 	@PostMapping(path = "/add")
-	public ResponseEntity<Void> addBook(@Valid @RequestBody Book book, Authentication authentication) {
+	public ResponseEntity<Void> addBook(@Valid @RequestBody AddBookRequest request, Authentication authentication) {
+		Book book = new Book();
+		book.setTitle(request.getTitle());
+	    book.setAuthor(request.getAuthor());
+	    book.setPublisher(request.getPublisher());
+	    book.setYear(request.getYear());
+	    book.setIsbn(request.getIsbn());
+	    book.setThumbnail(request.getThumbnail());
+	    book.setStocks(request.getStocks());
+	    book.setDigitalAvail(request.getDigitalAvail());
+	    book.setJenisBuku(request.getJenisBuku());
+	    book.setPages(request.getPages());
+
 		bookService.saveBook(book);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

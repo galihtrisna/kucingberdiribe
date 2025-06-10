@@ -36,7 +36,7 @@ public class Book extends AbstractEntity {
 	private String thumbnail;
 	
 	@NotNull(message = "Tahun tidak boleh kosong")
-	@Min(value = 1, message = "Stok minimal 1")
+	@Min(value = 0, message = "Stok minimal 0")
 	private Integer stocks;
 	
 	@Nullable

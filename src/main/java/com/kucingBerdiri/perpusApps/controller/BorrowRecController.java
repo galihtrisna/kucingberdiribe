@@ -35,27 +35,30 @@ public class BorrowRecController {
         List<BorrowRec> records = borrowRecService.getBorrowHistoryByUser(username);
         return ResponseEntity.ok(records);
     }
+    
+    @GetMapping("/history/all")
+    public ResponseEntity<?> getAllBorrowHistory(Authentication authentication) {
+
+        List<BorrowRec> records = borrowRecService.getAllBorrowHistory();
+        return ResponseEntity.ok(records);
+    }
 
     @PostMapping("/{bookId}")
     public ResponseEntity<?> borrowBook(
             @PathVariable Integer bookId,
             Authentication authentication) {
-        try {
-
             String username = authentication.getName();
             String message = borrowRecService.borrowBook(bookId, username);
             return ResponseEntity.ok(message);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+         
     }
     @PostMapping("/return/{borrowId}")
     public ResponseEntity<?> returnBook(
-            @PathVariable Integer borrowId,
+            @PathVariable String documentCode,
             Authentication authentication) {
         try {
-            String username = authentication.getName();
-            String message = borrowRecService.returnBook(borrowId, username);
+
+            String message = borrowRecService.returnBook(documentCode);
             return ResponseEntity.ok(message);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -12,15 +12,22 @@ import com.kucingBerdiri.perpusApps.response.ApiResponse;
 
 @RestControllerAdvice
 public class ValidException {
-	@ExceptionHandler({
-	    MethodArgumentNotValidException.class
-	})
+
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<String>> handleValidationErrors(MethodArgumentNotValidException ex) {
-		 Map<String, String> errors = new HashMap<>();
-	        ex.getBindingResult().getFieldErrors().forEach(error ->
-	                errors.put(error.getField(), error.getDefaultMessage())
-	        );
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
         return ResponseEntity.badRequest()
                 .body(ApiResponse.fail("Validasi gagal: " + errors.toString()));
+    }
+
+   
+    @ExceptionHandler(CustomBookException.class)
+    public ResponseEntity<ApiResponse<String>> handleCustomBookException(CustomBookException ex) {
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.fail("Kesalahan buku: " + ex.getMessage()));
     }
 }
