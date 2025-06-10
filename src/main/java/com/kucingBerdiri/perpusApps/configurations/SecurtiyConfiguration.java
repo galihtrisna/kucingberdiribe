@@ -49,7 +49,7 @@ public class SecurtiyConfiguration {
                 .requestMatchers(HttpMethod.GET, "/borrow/history").hasAnyAuthority("MEMBER")
                 .requestMatchers(HttpMethod.GET, "/borrow/history/all").hasAnyAuthority("LIBRARIAN")
                 .requestMatchers(HttpMethod.POST, "/borrow/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/review/**").hasAnyAuthority("MEMBER", "LIBRARIAN")
+                .requestMatchers(HttpMethod.GET, "/review/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/review/**").hasAnyAuthority("MEMBER", "LIBRARIAN")
                 .requestMatchers(HttpMethod.DELETE, "/review/**").hasAnyAuthority("MEMBER", "LIBRARIAN")
                 .requestMatchers(HttpMethod.GET, "/auth/me").hasAnyAuthority("MEMBER", "LIBRARIAN")
