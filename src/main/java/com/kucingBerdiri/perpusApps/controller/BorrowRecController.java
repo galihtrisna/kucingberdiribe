@@ -54,9 +54,9 @@ public class BorrowRecController {
     }
     
     
-    @PostMapping("/return/{borrowId}")
+    @PostMapping("/return/{documentCode}")
     public ResponseEntity<?> returnBook(
-            @PathVariable String documentCode,
+    		@PathVariable("documentCode") String documentCode,
             Authentication authentication) {
         try {
 
