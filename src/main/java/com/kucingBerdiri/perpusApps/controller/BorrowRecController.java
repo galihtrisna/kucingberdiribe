@@ -45,13 +45,15 @@ public class BorrowRecController {
 
     @PostMapping("/{bookId}")
     public ResponseEntity<?> borrowBook(
-            @PathVariable Integer bookId,
+    		@PathVariable("bookId") Integer bookId,
             Authentication authentication) {
-            String username = authentication.getName();
-            String message = borrowRecService.borrowBook(bookId, username);
-            return ResponseEntity.ok(message);
-         
+        
+        String username = authentication.getName();
+        String message = borrowRecService.borrowBook(bookId, username);
+        return ResponseEntity.ok(message);
     }
+    
+    
     @PostMapping("/return/{borrowId}")
     public ResponseEntity<?> returnBook(
             @PathVariable String documentCode,

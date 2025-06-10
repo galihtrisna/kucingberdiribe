@@ -2,12 +2,14 @@ package com.kucingBerdiri.perpusApps.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kucingBerdiri.perpusApps.dtos.ProfileDto;
 import com.kucingBerdiri.perpusApps.model.User;
 import com.kucingBerdiri.perpusApps.repository.UserRepo;
 
@@ -36,5 +38,20 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
         repository.save(user);
         return true;
+    }
+    
+    public ProfileDto getUserProfile(Authentication auth) {
+    	User user = repository.findByUsername(auth.getName())
+    			.orElseThrow(() -> new UsernameNotFoundException("User not found: " + auth.getName()));
+    	
+    	ProfileDto me = new ProfileDto(
+    			user.getUsername(),
+    			user.getFullName(),
+    			user.getRole(),
+    			user.getCreatedAt(),
+    			user.getLastUpdatedAt()
+    			);
+    	
+    	return me;
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.kucingBerdiri.perpusApps.dtos.LoginUserDto;
+import com.kucingBerdiri.perpusApps.dtos.ProfileDto;
 import com.kucingBerdiri.perpusApps.model.User;
 import com.kucingBerdiri.perpusApps.response.ApiResponse;
 import com.kucingBerdiri.perpusApps.service.JwtService;
@@ -32,7 +34,6 @@ public class UserController {
     private JwtService jwtService;
 
     public UserController(UserService userService, AuthenticationManager authenticationManager, JwtService jwtService) {
-
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -57,6 +58,11 @@ public class UserController {
         } else {
             throw new UsernameNotFoundException("Invalid user request!");
         }
+    }
+    
+    @GetMapping("/me")
+    public ApiResponse<ProfileDto> getProfile(Authentication auth) {
+    	return ApiResponse.success(userService.getUserProfile(auth));
     }
 
 }
